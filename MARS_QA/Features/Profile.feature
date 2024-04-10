@@ -9,9 +9,8 @@ Feature: Profile
 	TC6 - Cancel Edit Language
 3.Skills 
 	TC7 - Add Skill
-	TC8 
-	TC9 
-	TC10
+	TC8 - Cancel Skill
+	TC9 - Delete Skill
 
 	Scenario Outline: Logged User Add Description
 	Given user enter valid <Username> <Password>
@@ -78,3 +77,42 @@ Feature: Profile
 	Examples: 
 	| SkillName  | SkillLevel |
 	| 'Selenium' | 'Beginner' |
+
+	Scenario Outline: Logged User Click Cancel in Add Skills
+	Given click on Add New in Skills Tab
+	When User enter skill <SkillName> and Level <SkillLevel> 
+	And Click on Cancel at Skill Level
+	Then New Skill not added to profile
+
+	Examples: 
+	| SkillName  | SkillLevel |
+	| 'Selenium' | 'Beginner' |
+
+	Scenario Outline: Logged User wants to Delete Skills
+	Given for a skill in Skills Tab <SkillName>
+	When User click on X button for a skill <SkillName>
+	Then Skill deleted from profile successfully
+
+	Examples: 
+	| SkillName |
+	| 'C#' |
+
+	Scenario Outline: Logged User wants to Edit Skills
+	Given User click on Pen button for a Skill <SkillName> <SkillLevel>
+	When User enter new Skills <NewSkillName> , <NewSkillLevel> and click Update button
+	Then Skill changes saved to profile successfully
+
+	Examples: 
+	| SkillName | SkillLevel | NewSkillName | NewSkillLevel  |
+	| 'c#'      | 'Pro'      | 'J'          | 'Beginner'     |
+	| 'c#'      | 'Pro'      | 'Python'     | 'Intermediate' |
+
+	Scenario Outline: Logged User clicks Cancel at Edit Skill
+	Given User click on Pen button for a Skill <SkillName> <SkillLevel>
+	When User enter new Skills <NewSkillName> , <NewSkillLevel>
+	And Click on Cancel Button in Update Skill
+	Then Skill changes not saved to profile
+
+	Examples: 
+	| SkillName | SkillLevel | NewSkillName | NewSkillLevel |
+	| 'C#'      | 'Pro'      | 'j'          | 'Beginner'    |

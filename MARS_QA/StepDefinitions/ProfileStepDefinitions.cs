@@ -75,7 +75,7 @@ namespace MARS_QA.StepDefinitions
         //Delete Language
 
         [Given(@"for a language in Languages Tab '([^']*)'")]
-        public void GivenClickOnXButtonForALanguageInLanguagesTab(string english)
+        public void GivenClickOnXButtonForALanguageInLanguagesTab(string languageName)
         {
             login();
             NavigateToProfile();
@@ -134,6 +134,7 @@ namespace MARS_QA.StepDefinitions
         }
 
         //Skills
+        //Add Skills
 
         [Given(@"click on Add New in Skills Tab")]
         public void GivenClickOnAddNewInSkillsTab()
@@ -153,10 +154,92 @@ namespace MARS_QA.StepDefinitions
         public void ThenNewSkillAddedToProfileSuccessfully()
         {
             ProfileSkills.SaveNewSkill(driver);
-            NavigateToProfileLanguage();
+            NavigateToProfileSkills();
+        }
+
+        [When(@"User enter skill '([^']*)' and Level '([^']*)'")]
+        public void WhenUserEnterSkillAndLevel(string skillName, string skillLevel)
+        {
+            ProfileSkills.AddNewSkill(driver, skillName, skillLevel);
         }
 
 
+        [When(@"Click on Cancel at Skill Level")]
+        public void WhenClickOnCancelAtSkillLevel()
+        {
+            ProfileSkills.CancelNewSkill(driver);
+        }
+
+        [Then(@"New Skill not added to profile")]
+        public void ThenNewSkillNotAddedToProfile()
+        {
+            NavigateToProfileSkills();
+        }
+
+        //Delete Skill
+        [Given(@"for a skill in Skills Tab '([^']*)'")]
+        public void GivenForASkillInSkillsTab(string skillName)
+        {
+            login();
+            NavigateToProfile();
+            NavigateToProfileSkills();
+        }
+
+        [When(@"User click on X button for a skill '([^']*)'")]
+        public void WhenUserClickOnXButtonForASkill(string skillName)
+        {
+            ProfileSkills.DeleteSkill(driver, skillName);
+        }
+
+        [Then(@"Skill deleted from profile successfully")]
+        public void ThenSkillDeletedFromProfileSuccessfully()
+        {
+            NavigateToProfile();
+            NavigateToProfileSkills();
+        }
+
+        //Edit Skill
+
+        [Given(@"User click on Pen button for a Skill '([^']*)' '([^']*)'")]
+        public void GivenUserClickOnPenButtonForASkill(string oldSkillName, string oldSkillLevel)
+        {
+            login();
+            NavigateToProfile();
+            NavigateToProfileSkills();
+            ProfileSkills.ClickEditSkillButton(driver, oldSkillName, oldSkillLevel);
+        }
+
+        [When(@"User enter new Skills '([^']*)' , '([^']*)' and click Update button")]
+        public void WhenUserEnterNewSkillsAndClickUpdateButton(string newSkillName, string newSkillLevel)
+        {
+            ProfileSkills.EditSkill(driver, newSkillName, newSkillLevel);
+        }
+
+        [Then(@"Skill changes saved to profile successfully")]
+        public void ThenSkillChangesSavedToProfileSuccessfully()
+        {
+            ProfileSkills.UpdateSkill(driver);
+            NavigateToProfileSkills();
+        }
+
+        [When(@"User enter new Skills '([^']*)' , '([^']*)'")]
+        public void WhenUserEnterNewSkills(string newSkillName, string newSkillLevel)
+        {
+            ProfileSkills.EditSkill(driver, newSkillName, newSkillLevel);
+        }
+
+        [When(@"Click on Cancel Button in Update Skill")]
+        public void WhenClickOnCancelButtonInUpdateSkill()
+        {
+            ProfileSkills.CancelUpdateSkill(driver);
+        }
+
+        [Then(@"Skill changes not saved to profile")]
+        public void ThenSkillChangesNotSavedToProfile()
+        {
+            NavigateToProfile();
+            NavigateToProfileSkills();
+        }
 
     }
 }

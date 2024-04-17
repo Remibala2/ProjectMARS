@@ -35,10 +35,19 @@ namespace MARS_QA.Features
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Profile", "1. Description\r\n\tTC1 - Add Description\r\n2.Language \r\n\tTC2 - Add Language \r\n\tTC3 -" +
-                    " Cancel Add Language\r\n\tTC4 - Delete Language\r\n\tTC5 - Edit Langugage\r\n\tTC6 - Canc" +
-                    "el Edit Language\r\n3.Skills \r\n\tTC7 - Add Skill\r\n\tTC8 - Cancel Skill\r\n\tTC9 - Delet" +
-                    "e Skill", ProgrammingLanguage.CSharp, featureTags);
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Profile", @"1. Description
+	TC1 - Add Description
+	TC2 - Description mandatory error
+2.Language 
+	TC2 - Add Language 
+	TC3 - Cancel Add Language
+	TC4 - Delete Language
+	TC5 - Edit Langugage
+	TC6 - Cancel Edit Language
+3.Skills 
+	TC7 - Add Skill
+	TC8 - Cancel Skill
+	TC9 - Delete Skill", ProgrammingLanguage.CSharp, featureTags);
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -78,7 +87,10 @@ namespace MARS_QA.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Logged User Add Description")]
-        [NUnit.Framework.TestCaseAttribute("\'remibala2@gmail.com\'", "\'Jesus#1AnswerSheet\'", "\'AAAAAAA BBCCCC\'", null)]
+        [NUnit.Framework.TestCaseAttribute("\'remibala2@gmail.com\'", "\'Jesus#1AnswerSheet\'", "\'jshadfga\'", null)]
+        [NUnit.Framework.TestCaseAttribute("\'remibala2@gmail.com\'", "\'Jesus#1AnswerSheet\'", "\'\'", null)]
+        [NUnit.Framework.TestCaseAttribute("\'remibala2@gmail.com\'", "\'Jesus#1AnswerSheet\'", @"'jshadfgajshadfgajshadfgajshadfgajshadfgajshadfgajdfkggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggpooiosdjkadjfbdjhbjhdbjhvjhsdvjhsdjfbj'", null)]
+        [NUnit.Framework.TestCaseAttribute("\'remibala2@gmail.com\'", "\'Jesus#1AnswerSheet\'", "\'!lelfsd\'", null)]
         public void LoggedUserAddDescription(string username, string password, string description, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
@@ -87,7 +99,7 @@ namespace MARS_QA.Features
             argumentsOfScenario.Add("Password", password);
             argumentsOfScenario.Add("Description", description);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Logged User Add Description", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 15
+#line 16
  this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -97,13 +109,13 @@ namespace MARS_QA.Features
             else
             {
                 this.ScenarioStart();
-#line 16
+#line 17
  testRunner.Given(string.Format("user enter valid {0} {1}", username, password), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 17
+#line 18
  testRunner.When(string.Format("user enter Profile Description and click Save Button {0}", description), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 18
+#line 19
  testRunner.Then("Description saved successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -114,6 +126,10 @@ namespace MARS_QA.Features
         [NUnit.Framework.DescriptionAttribute("Logged User Add Languages")]
         [NUnit.Framework.TestCaseAttribute("\'English\'", "\'Fluent\'", null)]
         [NUnit.Framework.TestCaseAttribute("\'Tamil\'", "\'Native/Bilingual\'", null)]
+        [NUnit.Framework.TestCaseAttribute("\'\'", "\'Fluent\'", null)]
+        [NUnit.Framework.TestCaseAttribute("\'\'", "\'Choose Language Level\'", null)]
+        [NUnit.Framework.TestCaseAttribute("\'English\'", "\'Fluent\'", null)]
+        [NUnit.Framework.TestCaseAttribute("\'Spanish\'", "\'Choose Language Level\'", null)]
         public void LoggedUserAddLanguages(string languageName, string languageLevel, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
@@ -121,7 +137,7 @@ namespace MARS_QA.Features
             argumentsOfScenario.Add("LanguageName", languageName);
             argumentsOfScenario.Add("LanguageLevel", languageLevel);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Logged User Add Languages", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 24
+#line 28
  this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -131,13 +147,13 @@ namespace MARS_QA.Features
             else
             {
                 this.ScenarioStart();
-#line 25
+#line 29
  testRunner.Given("click on Add New in Languages Tab", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 26
+#line 30
  testRunner.When(string.Format("User enter language {0} and Level {1} and Add", languageName, languageLevel), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 27
+#line 31
  testRunner.Then("New Language added to profile successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -154,7 +170,7 @@ namespace MARS_QA.Features
             argumentsOfScenario.Add("LanguageName", languageName);
             argumentsOfScenario.Add("LanguageLevel", languageLevel);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Logged User Click Cancel in Add Languages", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 34
+#line 42
  this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -164,16 +180,16 @@ namespace MARS_QA.Features
             else
             {
                 this.ScenarioStart();
-#line 35
+#line 43
  testRunner.Given("click on Add New in Languages Tab", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 36
+#line 44
  testRunner.When(string.Format("User enter language {0} and Level {1}", languageName, languageLevel), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 37
+#line 45
  testRunner.And("Click on Cancel", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 38
+#line 46
  testRunner.Then("New Language not added to profile", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -189,7 +205,7 @@ namespace MARS_QA.Features
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("LanguageName", languageName);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Logged User wants to Delete Languages", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 44
+#line 52
  this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -199,13 +215,13 @@ namespace MARS_QA.Features
             else
             {
                 this.ScenarioStart();
-#line 45
+#line 53
  testRunner.Given(string.Format("for a language in Languages Tab {0}", languageName), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 46
+#line 54
  testRunner.When(string.Format("User click on X button for a language {0}", languageName), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 47
+#line 55
  testRunner.Then("Language deleted from profile successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -224,7 +240,7 @@ namespace MARS_QA.Features
             argumentsOfScenario.Add("NewLanguageName", newLanguageName);
             argumentsOfScenario.Add("NewLanguageLevel", newLanguageLevel);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Logged User wants to Edit Languages", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 53
+#line 61
  this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -234,13 +250,13 @@ namespace MARS_QA.Features
             else
             {
                 this.ScenarioStart();
-#line 54
+#line 62
  testRunner.Given(string.Format("User click on Pen button for a language {0} {1}", languageName, languageLevel), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 55
+#line 63
  testRunner.When(string.Format("User enter new values {0} {1}", newLanguageName, newLanguageLevel), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 56
+#line 64
  testRunner.Then("Language changes saved to profile successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -259,7 +275,7 @@ namespace MARS_QA.Features
             argumentsOfScenario.Add("NewLanguageName", newLanguageName);
             argumentsOfScenario.Add("NewLanguageLevel", newLanguageLevel);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Logged User clicks Cancel at Edit Languages", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 62
+#line 70
  this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -269,16 +285,16 @@ namespace MARS_QA.Features
             else
             {
                 this.ScenarioStart();
-#line 63
+#line 71
  testRunner.Given(string.Format("User click on Pen button for a language {0} {1}", languageName, languageLevel), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 64
+#line 72
  testRunner.When(string.Format("User enter new values {0} {1}", newLanguageName, newLanguageLevel), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 65
+#line 73
  testRunner.And("Click on Cancel Button in Update Language", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 66
+#line 74
  testRunner.Then("Language changes not saved to profile", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -295,7 +311,7 @@ namespace MARS_QA.Features
             argumentsOfScenario.Add("SkillName", skillName);
             argumentsOfScenario.Add("SkillLevel", skillLevel);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Logged User Add New Skill", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 72
+#line 80
  this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -305,13 +321,13 @@ namespace MARS_QA.Features
             else
             {
                 this.ScenarioStart();
-#line 73
+#line 81
  testRunner.Given("click on Add New in Skills Tab", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 74
+#line 82
  testRunner.When(string.Format("User enter skill {0} and Level {1} and Add", skillName, skillLevel), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 75
+#line 83
  testRunner.Then("New Skill added to profile successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -328,7 +344,7 @@ namespace MARS_QA.Features
             argumentsOfScenario.Add("SkillName", skillName);
             argumentsOfScenario.Add("SkillLevel", skillLevel);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Logged User Click Cancel in Add Skills", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 81
+#line 89
  this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -338,16 +354,16 @@ namespace MARS_QA.Features
             else
             {
                 this.ScenarioStart();
-#line 82
+#line 90
  testRunner.Given("click on Add New in Skills Tab", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 83
+#line 91
  testRunner.When(string.Format("User enter skill {0} and Level {1}", skillName, skillLevel), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 84
+#line 92
  testRunner.And("Click on Cancel at Skill Level", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 85
+#line 93
  testRunner.Then("New Skill not added to profile", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -363,7 +379,7 @@ namespace MARS_QA.Features
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("SkillName", skillName);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Logged User wants to Delete Skills", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 91
+#line 99
  this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -373,13 +389,13 @@ namespace MARS_QA.Features
             else
             {
                 this.ScenarioStart();
-#line 92
+#line 100
  testRunner.Given(string.Format("for a skill in Skills Tab {0}", skillName), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 93
+#line 101
  testRunner.When(string.Format("User click on X button for a skill {0}", skillName), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 94
+#line 102
  testRunner.Then("Skill deleted from profile successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -399,7 +415,7 @@ namespace MARS_QA.Features
             argumentsOfScenario.Add("NewSkillName", newSkillName);
             argumentsOfScenario.Add("NewSkillLevel", newSkillLevel);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Logged User wants to Edit Skills", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 100
+#line 108
  this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -409,13 +425,13 @@ namespace MARS_QA.Features
             else
             {
                 this.ScenarioStart();
-#line 101
+#line 109
  testRunner.Given(string.Format("User click on Pen button for a Skill {0} {1}", skillName, skillLevel), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 102
+#line 110
  testRunner.When(string.Format("User enter new Skills {0} , {1} and click Update button", newSkillName, newSkillLevel), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 103
+#line 111
  testRunner.Then("Skill changes saved to profile successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -434,7 +450,7 @@ namespace MARS_QA.Features
             argumentsOfScenario.Add("NewSkillName", newSkillName);
             argumentsOfScenario.Add("NewSkillLevel", newSkillLevel);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Logged User clicks Cancel at Edit Skill", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 110
+#line 118
  this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -444,16 +460,16 @@ namespace MARS_QA.Features
             else
             {
                 this.ScenarioStart();
-#line 111
+#line 119
  testRunner.Given(string.Format("User click on Pen button for a Skill {0} {1}", skillName, skillLevel), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 112
+#line 120
  testRunner.When(string.Format("User enter new Skills {0} , {1}", newSkillName, newSkillLevel), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 113
+#line 121
  testRunner.And("Click on Cancel Button in Update Skill", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 114
+#line 122
  testRunner.Then("Skill changes not saved to profile", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

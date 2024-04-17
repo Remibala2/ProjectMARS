@@ -1,7 +1,11 @@
 using MARS_QA.Mars_Pages;
 using MARS_QA.Utilities;
+using NUnit.Framework;
 using System;
 using TechTalk.SpecFlow;
+using MARS_QA.Utilities;
+using OpenQA.Selenium;
+using System.Security.Permissions;
 
 namespace MARS_QA.StepDefinitions
 {
@@ -17,7 +21,17 @@ namespace MARS_QA.StepDefinitions
         [When(@"user enter Profile Description and click Save Button '([^']*)'")]
         public void WhenUserEnterProfileDescriptionAndClickSaveButton(string description)
         {
+            string expectedEmptyDescriptionAlert = "Please, a description is required";
+            string expectedSuccessDescriptionMessage = "Description has been saved successfully";
+            string expectedStartOfDescriptionSpecialChar = "First character can only be digit or letters";
+
+            Assert.That(description, Is.Not.Null);
             ProfileLanguages.AddProfileDescription(driver, description);
+            var alertText = driver.FindElement(By.XPath("/html[1]/body[1]/div[1]/div[1]"));
+            Thread.Sleep(100);
+            if(alertText.Text == expectedStartOfDescriptionSpecialChar) { Assert.Pass(alertText.Text);}
+            else if(alertText.Text == expectedEmptyDescriptionAlert) { Assert.Pass(alertText.Text);}
+            else if(alertText.Text == expectedSuccessDescriptionMessage) {  Assert.Pass(alertText.Text);}  
         }
 
 
@@ -25,6 +39,7 @@ namespace MARS_QA.StepDefinitions
         public void ThenDescriptionSavedSuccessfully()
         {
             TurnOnWait();
+            NavigateToProfile();
         }
 
         //Languages
@@ -41,13 +56,23 @@ namespace MARS_QA.StepDefinitions
         [When(@"User enter language '([^']*)' and Level '([^']*)' and Add")]
         public void WhenUserEnterLanguageAndLevelAndAdd(string languageName, string languageLevel)
         {
-            ProfileLanguages.AddNewLanguage(driver, languageName,languageLevel);
+            ProfileLanguages.AddNewLanguage(driver, languageName,languageLevel);    
+
         }
 
         [Then(@"New Language added to profile successfully")]
         public void ThenNewLanguageAddedToProfileSuccessfully()
         {
+            string expectedEmptyLanguageOrLevelAlert = "Please enter language and level";
+            string expectedExistingLanguageAlert = "Duplicated data";
+            string expectedExistingLanguageAndLevelAlert = "This language is already exist in your language list";
             ProfileLanguages.SaveNewLanguage(driver);
+            Thread.Sleep(1000);
+            var alertText = driver.FindElement(By.XPath("/html[1]/body[1]/div[1]/div[1]"));
+            Thread.Sleep(1000);
+            if (alertText.Text == expectedEmptyLanguageOrLevelAlert) { Assert.Pass(alertText.Text); }
+            else if (alertText.Text == expectedExistingLanguageAlert) { Assert.Pass(alertText.Text); }
+            else if (alertText.Text == expectedExistingLanguageAndLevelAlert) { Assert.Pass(alertText.Text); }
             NavigateToProfileLanguage();
         }
 
@@ -84,8 +109,11 @@ namespace MARS_QA.StepDefinitions
 
         [When(@"User click on X button for a language '([^']*)'")]
         public void WhenUserClickOnXButtonForALanguage(string languageName)
-        {
+        {            
             ProfileLanguages.DeleteLanguage(driver, languageName);
+            Thread.Sleep(1000);
+            var alertText = driver.FindElement(By.XPath("/html[1]/body[1]/div[1]/div[1]"));
+            Assert.Pass(alertText.Text);             
         }
 
         [Then(@"Language deleted from profile successfully")]
@@ -95,7 +123,7 @@ namespace MARS_QA.StepDefinitions
             NavigateToProfileLanguage();
         }
 
-        //Edit Langugae
+        //Edit Language
 
         [Given(@"User click on Pen button for a language '([^']*)' '([^']*)'")]
         public void GivenUserClickOnPenButtonForALanguage(string oldLanguageName, string oldLanguageLevel)

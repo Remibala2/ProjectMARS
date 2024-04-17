@@ -1,7 +1,11 @@
 ﻿using MARS_QA.Utilities;
+using NUnit.Framework;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +17,7 @@ namespace MARS_QA.Mars_Pages
         private static By DescPenButtonLocator = By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/div/div/div/h3/span/i");
         private static By DescTextBoxLocator = By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/div/div/form/div/div/div[2]/div[1]/textarea");
         private static By DescSaveButtonLocator = By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/div/div/form/div/div/div[2]/button");
+        private static By DescriptionSavedMessage = By.XPath("//div[contains(text(),'Description has been saved successfully')]");
         private static By LanguageAddNewButtonLocator = By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[2]/div/div[2]/div/table/thead/tr/th[3]/div");
         private static By LanguageTextBoxLocator = By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[2]/div/div[2]/div/div/div[1]/input");
         private static By LanguageLevelLocator = By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[2]/div/div[2]/div/div/div[2]/select");
@@ -33,25 +38,33 @@ namespace MARS_QA.Mars_Pages
 
         public static void AddProfileDescription(IWebDriver driver, string description)
         {           
-            TurnOnWait();
-            TurnOnWait();
-            IWebElement DescPenButton = driver.FindElement(DescPenButtonLocator);
-            DescPenButton.Click();
-            TurnOnWait();
-            IWebElement DescTextbox = driver.FindElement(DescTextBoxLocator);
-            DescTextbox.Click();
-            DescTextbox.SendKeys(description);
+                TurnOnWait(15);
+                IWebElement DescPenButton = driver.FindElement(DescPenButtonLocator);
+                DescPenButton.Click();
+                TurnOnWait(10);
+                IWebElement DescTextbox = driver.FindElement(DescTextBoxLocator);
+                TurnOnWait(10);
+                DescTextbox.Click() ;
 
-            TurnOnWait();
-            if(description != null)
-            {
-                IWebElement DescSaveButton = driver.FindElement(DescSaveButtonLocator);
-                DescSaveButton.Click();
-            }
-            
+              if(description!= null)
+                {
+                    DescTextbox.Click();
+                    for(int i=0;i<=DescTextbox.Text.Length; i++)
+                    {
+                        Thread.Sleep(1000);
+                        DescTextbox.SendKeys(Keys.Backspace);
+                        Thread.Sleep(500);
+                    }
+                    DescTextbox.Click();
+                
+                    DescTextbox.SendKeys(description);
+                    IWebElement DescSaveButton = driver.FindElement(DescSaveButtonLocator);
+                    DescSaveButton.Click();
+                
+               }        
         }
 
-        public static void AddNewLanguage(IWebDriver driver, string languageName, string languageLevel)
+            public static void AddNewLanguage(IWebDriver driver, string languageName, string languageLevel)
         {
             TurnOnWait();
             IWebElement languageAddNewButton = driver.FindElement(LanguageAddNewButtonLocator);
@@ -59,11 +72,6 @@ namespace MARS_QA.Mars_Pages
             TurnOnWait();
             IWebElement languageTextBox = driver.FindElement(LanguageTextBoxLocator);
             IWebElement languageLevelDropDown = driver.FindElement(LanguageLevelLocator);
-/*          IWebElement languageAddButton = driver.FindElement(LanguageAddButtonLocator);
-            IWebElement languageCancelButton = driver.FindElement(LanguageCancelButtonLocator);
-
-        
-            TurnOnWait();*/
             languageTextBox.Click();
             languageTextBox.SendKeys(languageName);
             languageLevelDropDown.Click();
@@ -71,13 +79,14 @@ namespace MARS_QA.Mars_Pages
 
             languageLevelDropDown.SendKeys(languageLevel);
             TurnOnWait();
+
         }
 
         public static void SaveNewLanguage(IWebDriver driver)
         {
-           
+
             IWebElement languageAddButton = driver.FindElement(LanguageAddButtonLocator);
-            languageAddButton.Click();           
+            languageAddButton.Click();            
         }
 
         public static void CancelNewLanguage(IWebDriver driver)
@@ -91,12 +100,18 @@ namespace MARS_QA.Mars_Pages
         {
             try
             {
+                Thread.Sleep(3000);
                 IWebElement lastLanguageDeleteButton = driver.FindElement(LastLanguageDeleteButtonLocator);
                 lastLanguageDeleteButton.Click();
             }
-
-            catch(Exception ex) {
-                Console.WriteLine(ex.Message);              
+            catch (Exception ex)
+            {
+                AddNewLanguage(driver, "blah", "Fluent");
+                SaveNewLanguage(driver);
+                DeleteLanguage(driver,"ii");
+             /*   Thread.Sleep(3000);
+                IWebElement lastLanguageDeleteButton = driver.FindElement(LastLanguageDeleteButtonLocator);
+                lastLanguageDeleteButton.Click();*/
             }
             
         }
@@ -125,6 +140,7 @@ namespace MARS_QA.Mars_Pages
             lastLanguageLevelDropDown.Click();
             lastLanguageLevelDropDown.SendKeys(newLanguageLevel);
             TurnOnWait();
+                
 
         }
             catch(Exception ex) { Console.WriteLine(ex.Message); }

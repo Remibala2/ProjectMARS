@@ -1,6 +1,7 @@
 Feature: Profile 
 1. Description
 	TC1 - Add Description
+	TC2 - Description mandatory error
 2.Language 
 	TC2 - Add Language 
 	TC3 - Cancel Add Language
@@ -18,8 +19,11 @@ Feature: Profile
 	Then Description saved successfully
 
 	Examples: 
-	| Username              | Password             | Description      |
-	| 'remibala2@gmail.com' | 'Jesus#1AnswerSheet' | 'AAAAAAA BBCCCC' |
+	| Username              | Password             | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+	| 'remibala2@gmail.com' | 'Jesus#1AnswerSheet' | 'jshadfga'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+	| 'remibala2@gmail.com' | 'Jesus#1AnswerSheet' | ''                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+	| 'remibala2@gmail.com' | 'Jesus#1AnswerSheet' | 'jshadfgajshadfgajshadfgajshadfgajshadfgajshadfgajdfkggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggpooiosdjkadjfbdjhbjhdbjhvjhsdvjhsdjfbj' |
+	| 'remibala2@gmail.com' | 'Jesus#1AnswerSheet' | '!lelfsd'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 
 	Scenario Outline: Logged User Add Languages
 	Given click on Add New in Languages Tab
@@ -27,9 +31,13 @@ Feature: Profile
 	Then New Language added to profile successfully
 
 	Examples: 
-	| LanguageName | LanguageLevel      |
-	| 'English'    | 'Fluent'           |
-	| 'Tamil'      | 'Native/Bilingual' |
+	| LanguageName | LanguageLevel           |
+	| 'English'    | 'Fluent'                |
+	| 'Tamil'      | 'Native/Bilingual'      |
+	| ''           | 'Fluent'                |
+	| ''           | 'Choose Language Level' |
+	| 'English'    | 'Fluent'                |
+	| 'Spanish'    | 'Choose Language Level' |
 
 	Scenario Outline: Logged User Click Cancel in Add Languages
 	Given click on Add New in Languages Tab

@@ -1,4 +1,5 @@
 ﻿using FluentAssertions.Formatting;
+using LivingDoc.Dtos;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
@@ -6,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace MARS_QA.Utilities
 {
@@ -31,45 +33,20 @@ namespace MARS_QA.Utilities
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
         }
 
+        public static void TurnOnWait(int s)
+        {
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(s);
+        }
+
         public static void NavigateUrl()
         {
             driver.Navigate().GoToUrl(ConstantHelper.BaseUrl);
         }
 
-        public static void TakeScreenshot(IWebDriver driver, string saveLocation)
-        {
-            ITakesScreenshot ssdriver = driver as ITakesScreenshot;
-            Screenshot screenshot = ssdriver.GetScreenshot();
-            screenshot.SaveAsFile(saveLocation);
-        }
-
-
-        /*            public static string SaveScreenshot(IWebDriver driver, string ScreenShotFileName) // Definition
-                    {
-                        var folderLocation = (ConstantHelper.ScreenshotPath);
-
-                        if (!System.IO.Directory.Exists(folderLocation))
-                        {
-                            System.IO.Directory.CreateDirectory(folderLocation);
-                        }
-
-                        var screenShot = ((ITakesScreenshot)driver).GetScreenshot();
-                        var fileName = new StringBuilder(folderLocation);
-
-                        fileName.Append(ScreenShotFileName);
-                        fileName.Append(DateTime.Now.ToString("_dd-mm-yyyy_mss"));
-                        //fileName.Append(DateTime.Now.ToString("dd-mm-yyyym_ss"));
-                        fileName.Append(".jpeg");
-                    screenShot.SaveAsFile(fileName.ToString());
-                        //ScreenshotImageFormat.Jpeg);
-                  //  screenShot.SaveAsFile(fileName.ToString(), Screenshot;
-                    return fileName.ToString();
-                    }
-                */
-
 
         public static void login(IWebDriver driver, string username, string password)
         {
+            Thread.Sleep(1000);
             IWebElement signInButton = driver.FindElement(SignInButtonLocator);
             signInButton.Click();
             IWebElement usernameTextbox = driver.FindElement(UserNameTextBoxLocator);

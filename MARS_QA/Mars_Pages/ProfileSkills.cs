@@ -10,77 +10,80 @@ namespace MARS_QA.Mars_Pages
 {
     public class ProfileSkills : CommonDriver
     {
-
-        private static By SkillAddNewButtonLocator = By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/table/thead/tr/th[3]/div");
-        private static By SkillTextBoxLocator = By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/div/div[1]/input");
-        private static By SkillLevelLocator = By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/div/div[2]/select");
-        private static By SkillAddButtonLocator = By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/div/span/input[1]");
-        private static By SkillCancelButtonLocator = By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/div/span/input[2]");
-        private static By LastSkillNameLocator = By.XPath("");
-        private static By LastSkillLevelTextLocator = By.XPath("");
-        private static By LastSkillDeleteButtonLocator = By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/table/tbody/tr/td[3]/span[2]/i");
-        private static By LastSkillEditButtonLocator = By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/table/tbody[last()]/tr/td[3]/span[1]/i");
-        private static By LastSkillTextBoxLocator = By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/table/tbody[last()]/tr/td/div/div[1]/input");
-        private static By LastSkillLevelLocator = By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/table/tbody[last()]/tr/td/div/div[2]/select");
-        private static By LastSkillUpdateButtonLocator = By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/table/tbody[last()]/tr/td/div/span/input[1]");
-        private static By LastSkillCancelEditButtonLocator = By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/table/tbody[last()]/tr/td/div/span/input[2]");
-
-
-
-
-        public static void AddNewSkill(IWebDriver driver, string skillName, string skillLevel)
+        public static void AddNewSkill(string skillName, string skillLevel)
         {
             TurnOnWait();
-            IWebElement skillAddNewButton = driver.FindElement(SkillAddNewButtonLocator);
+            IWebElement skillAddNewButton = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/table/thead/tr/th[3]/div"));
             skillAddNewButton.Click();
             TurnOnWait();
-            IWebElement skillTextBox = driver.FindElement(SkillTextBoxLocator);
-            IWebElement skillLevelDropDown = driver.FindElement(SkillLevelLocator);
-
+            IWebElement skillTextBox = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/div/div[1]/input"));
+            IWebElement skillLevelDropDown = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/div/div[2]/select"));
             skillTextBox.Click();
             skillTextBox.SendKeys(skillName);
             skillLevelDropDown.Click();
             TurnOnWait();
-
             skillLevelDropDown.SendKeys(skillLevel);
             TurnOnWait();
         }
 
-        public static void SaveNewSkill(IWebDriver driver)
+        public static string getAlertText()
+        {
+            Thread.Sleep(1000);
+            var alertText = driver.FindElement(By.XPath("/html[1]/body[1]/div[1]/div[1]"));
+            Thread.Sleep(1000);
+            Console.WriteLine("Actual Alert Text"+alertText);
+            return alertText.Text;
+        }
+
+        public static void SaveNewSkill()
         {
 
-            IWebElement skillAddButton = driver.FindElement(SkillAddButtonLocator);
+            IWebElement skillAddButton = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/div/span/input[1]"));
             skillAddButton.Click();
         }
 
-        public static void CancelNewSkill(IWebDriver driver)
+        public static void CancelNewSkill()
         {
             TurnOnWait();
-            IWebElement skillCancelButton = driver.FindElement(SkillCancelButtonLocator);
+            IWebElement skillCancelButton = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/div/span/input[2]"));
             skillCancelButton.Click();
         }
 
-        public static void DeleteSkill(IWebDriver driver, string skillName)
+        public static void DeleteSkill()
         {
-            try
-            {
-                IWebElement lastSkillDeleteButton = driver.FindElement(LastSkillDeleteButtonLocator);
-                lastSkillDeleteButton.Click();
-            }
+            AddNewSkill("blah", "Basic");
+            SaveNewSkill();
+            Thread.Sleep(1000);
+            IWebElement lastSkillDeleteButton = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/table/tbody/tr/td[3]/span[2]/i"));
+            lastSkillDeleteButton.Click();
+        }
 
-            catch (Exception ex)
+        public static void DeleteMyLastSkillEntry()
+        {
+            Thread.Sleep(5000);
+            IWebElement lastSkillDeleteButton = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/table/tbody[last()]/tr/td[3]/span[2]/i"));
+            lastSkillDeleteButton.Click();
+        }
+
+        public static void DeleteAllSkillEntry()
+        {
+            Thread.Sleep(5000);
+            int count = driver.FindElements(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/table/tbody")).Count;
+            for (int i = 0; i < count; i++)
             {
-                Console.WriteLine(ex.Message);
+                IWebElement lastSkillDeleteButton = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/table/tbody[last()]/tr/td[3]/span[2]/i"));
+                lastSkillDeleteButton.Click();
+                Thread.Sleep(3000);
             }
 
         }
 
         //Edit Skill
-        public static void ClickEditSkillButton(IWebDriver driver, string oldSkill, string oldSkillLevel)
+        public static void ClickEditSkillButton(string oldSkill, string oldSkillLevel)
         {
             try
             {
-                IWebElement skillEditButton = driver.FindElement(LastSkillEditButtonLocator);
+                IWebElement skillEditButton = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/table/tbody[last()]/tr/td[3]/span[1]/i"));
                 skillEditButton.Click();
 
             }
@@ -88,40 +91,39 @@ namespace MARS_QA.Mars_Pages
 
         }
 
-        public static void EditSkill(IWebDriver driver, string newSkillName, string newSkillLevel)
+        public static void EditSkill(string newSkillName, string newSkillLevel)
         {
             try
             {
-                IWebElement lastSkillTextBox = driver.FindElement(LastSkillTextBoxLocator);
-                IWebElement lastSkillLevelDropDown = driver.FindElement(LastSkillLevelLocator);
+                IWebElement lastSkillTextBox = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/table/tbody[last()]/tr/td/div/div[1]/input"));
+                IWebElement lastSkillLevelDropDown = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/table/tbody[last()]/tr/td/div/div[2]/select"));
 
                 lastSkillTextBox.Click();
                 lastSkillTextBox.Clear();
                 lastSkillTextBox.SendKeys(newSkillName);
-                Console.WriteLine(newSkillName);
                 lastSkillLevelDropDown.Click();
-                TurnOnWait();
                 lastSkillLevelDropDown.SendKeys(newSkillLevel);
-                Console.WriteLine(newSkillLevel);
                 TurnOnWait();
 
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); }
         }
 
-        public static void UpdateSkill(IWebDriver driver)
+        public static void UpdateSkill()
         {
             try
             {
-                IWebElement lastSkillUpdateButton = driver.FindElement(LastSkillUpdateButtonLocator);
+                Thread.Sleep(1000);
+                IWebElement lastSkillUpdateButton = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/table/tbody[last()]/tr/td/div/span/input[1]"));
                 lastSkillUpdateButton.Click();
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); }
         }
 
-        public static void CancelUpdateSkill(IWebDriver driver)
+        public static void CancelUpdateSkill()
         {
-            IWebElement lastSkillCancelButton = driver.FindElement(LastSkillCancelEditButtonLocator);
+            Thread.Sleep(1000);
+            IWebElement lastSkillCancelButton = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[2]/div/div/div/div[3]/form/div[3]/div/div[2]/div/table/tbody/tr/td/div/span/input[2]"));
             lastSkillCancelButton.Click();
         }
     }

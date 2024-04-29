@@ -26,6 +26,7 @@ namespace MARS_QA.Utilities
             TurnOnWait();
             Close();
         }
+
     }
       
 }

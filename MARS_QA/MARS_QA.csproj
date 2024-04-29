@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <SpecFlowObsoleteCodeBehindFiles Remove="Features\Profile_Description.feature.cs" />
+    <SpecFlowObsoleteCodeBehindFiles Remove="Features\Profile_Language.feature.cs" />
+    <SpecFlowObsoleteCodeBehindFiles Remove="Features\Profile_Skills.feature.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Allure.SpecFlow" Version="2.12.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
     <PackageReference Include="Selenium.Support" Version="4.19.0" />

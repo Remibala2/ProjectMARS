@@ -31,6 +31,11 @@ namespace MARS_QA.Utilities
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
         }
 
+        public static void TurnOnWait(int s)
+        {
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(s);
+        }
+
         public static void NavigateUrl()
         {
             driver.Navigate().GoToUrl(ConstantHelper.BaseUrl);
